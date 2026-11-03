@@ -179,7 +179,7 @@ Deployment profiles and integration entries document requirements; they do not p
 
 **Connect the system. Preserve the evidence. Make the decision accountable.**
 
-[Product overview](https://sdlccorp.com/products/assurio/) · [SDLC Corp](https://sdlccorp.com/) · [Private hosted workspace — authorized access required](https://assurio-assurance-workspace.ovoidjuice2.chatgpt.site)
+[Product overview](https://sdlccorp.com/products/assurio/) · [SDLC Corp](https://sdlccorp.com/)
 
 <sub>Assurio is an SDLC Corp product. Third-party dependencies retain their respective licenses. No open-source license is granted by this README.</sub>
 
