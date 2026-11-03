@@ -1,66 +1,186 @@
-# Assurio � AI Governance & Assurance
+<div align="center">
 
-A working, owner-private assurance application based on the capabilities described at https://sdlccorp.com/products/assurio/.
+<img src="docs/assets/assurio-banner.svg" alt="Assurio by SDLC Corp — AI governance, evidence, and accountable decisions" width="100%" />
 
-## Included workflows
+# Assurio · AI Governance & Assurance Platform
 
-- AI system registration with scope, ownership, risk tier, model, supplier, limits, and lifecycle status.
-- Risk assessments with likelihood, impact, mitigation, and residual risk.
-- Framework/control mappings and documented acceptance criteria.
-- Evaluation results with server-computed pass/fail for minimum-value metrics; inconclusive findings are retained.
-- Evidence records with provenance, expiry, revisions, file uploads, SHA-256 fingerprints, and downloads.
-- Scoped decisions with approval gates for current evidence, failed/inconclusive evaluations, and open change reviews.
-- Model/scope/limit changes and recorded change events invalidate linked evidence and flag decisions for reassessment.
-- AI/ML component inventory, agent oversight records, integration contracts, and deployment policy profiles.
-- Database-backed records, audit history with prior values, search, status filters, linked records, JSON audit exports.
-- Optional illustrative sample workspace. Production starts empty; select �Load sample workspace� to explore.
+**AI inventory. Risk management. Evidence you can trace.**
 
-## Architecture and access
+A connected workspace for AI governance, model oversight, and evidence-backed decisions.<br />
+**A product of [SDLC Corp](https://sdlccorp.com/).**
 
-React + TypeScript on Vinext, deployed as a Cloudflare Worker through Sites. D1 stores records and audit events. R2 stores evidence files. The hosted application relies on the owner-private Sites authentication boundary. Keep it private: the API is a shared-owner workspace and does not implement multi-tenant membership or independent enterprise RBAC.
+[![Product: SDLC Corp](https://img.shields.io/badge/Product-SDLC_Corp-8062CF?style=flat-square)](https://sdlccorp.com/products/assurio/)
+[![Application: Demo](https://img.shields.io/badge/Application-Functional_Demo-516178?style=flat-square)](#implementation-scope)
+[![React 19](https://img.shields.io/badge/React-19-149ECA?style=flat-square&logo=react&logoColor=white)](package.json)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178C6?style=flat-square&logo=typescript&logoColor=white)](package.json)
+[![Cloudflare Workers](https://img.shields.io/badge/Cloudflare-Workers-F38020?style=flat-square&logo=cloudflare&logoColor=white)](docs/APPLICATION_GUIDE.md#architecture)
 
-Local preview binds only to 127.0.0.1 and is intended for a trusted developer machine. Do not expose the local server publicly.
+[Explore the product](https://sdlccorp.com/products/assurio/) · [Quick start](#quick-start) · [Application guide](docs/APPLICATION_GUIDE.md) · [API reference](docs/APPLICATION_GUIDE.md#api-reference)
 
-## Run locally
+</div>
 
-Requires Node 22.13+.
+---
 
-1. Run npm ci.
-2. Run npm run build.
-3. Apply the initial migration once:
-   node --import ./scripts/sites-env.mjs ./node_modules/wrangler/bin/wrangler.js d1 execute DB --local --config dist/server/wrangler.json --persist-to .wrangler/state --file drizzle/0000_nervous_guardian.sql
-4. Run npm start and open http://127.0.0.1:8787.
+## From AI inventory to accountable decisions
 
-For source development use npm run dev. Local database and object storage live under ignored .wrangler/state. Hosted storage is separate.
+**Assurio is SDLC Corp's AI governance and assurance product.** This repository contains a functional demo application that connects **AI risk management**, **model governance**, evaluation findings, and **evidence management** across the AI lifecycle.
+
+Register an AI system, define its intended use, assess its risks, review evaluation evidence, and record a scoped approval. When the system changes, linked evidence and decisions are flagged for reassessment.
+
+| Know what you operate | Know what supports it | Know when to review it |
+| :--- | :--- | :--- |
+| An AI system inventory with owners, models, components, and operating limits. | Linked requirements, evaluation results, evidence artifacts, and approval records. | Change-triggered reassessment with a traceable history of revisions. |
+
+> [!NOTE]
+> This repository demonstrates working governance workflows with persistent storage. Live connectors, enterprise authorization, and agent runtime enforcement have separate implementation requirements. See [implementation scope](#implementation-scope).
+
+## Inside the workspace
+
+![Assurio AI governance dashboard showing AI system inventory, risk distribution, evidence currency, and decisions awaiting review](docs/assets/assurio-dashboard.png)
+
+*Actual application screenshot with illustrative sample and local QA records. Figures do not represent customer deployments or production results.*
+
+<details>
+<summary><strong>View the mobile workspace</strong></summary>
+
+<p align="center">
+  <img src="docs/assets/assurio-mobile.png" alt="Assurio mobile AI inventory with responsive navigation and system records" width="320" />
+</p>
+
+</details>
+
+## AI governance and assurance capabilities
+
+| Capability | What you can do |
+| :--- | :--- |
+| **AI system inventory** | Register systems with accountable owners, intended use, models, suppliers, risk tiers, and lifecycle status. |
+| **AI risk management** | Assess likelihood and impact, document mitigations, and assign residual risk ownership. |
+| **Framework and control mapping** | Connect requirements and acceptance criteria to NIST AI RMF, ISO/IEC 42001, ISO/IEC 23894, EU AI Act, and internal policies. |
+| **Model evaluation records** | Capture scenarios, methods, metrics, thresholds, observations, and failed or inconclusive findings. |
+| **Evidence management** | Preserve provenance, baselines, validity dates, review status, and controlled revisions. Upload artifacts with SHA-256 fingerprints. |
+| **Approval workflows** | Record decision scope, conditions, owners, and review dates with server-side approval checks. |
+| **Change-triggered reassessment** | Flag evidence and decisions when models, operating scopes, limits, or recorded change events affect the assurance record. |
+| **AI / ML bill of materials** | Document component versions, dependencies, suppliers, hashes, and provenance. |
+| **AI agent governance records** | Define agent identities, tool permissions, action boundaries, and human oversight requirements. |
+| **Audit trails and reporting** | Inspect record history and export JSON packages for review. |
+
+Framework mappings help organize governance work; they do not establish certification or legal compliance.
+
+## One connected assurance lifecycle
+
+![Assurio AI assurance lifecycle: scope, govern, assess, test, evidence, decide, monitor recorded changes, and reassess](docs/assets/assurio-lifecycle.svg)
+
+**Example:** A support assistant receives a new model version. Assurio marks its linked evidence stale and flags decisions for reassessment. Reviewers can update the evaluation record, review supporting artifacts, and make a fresh decision within the declared scope.
+
+[Read the workflow rules →](docs/APPLICATION_GUIDE.md#workflow-rules)
+
+## Evidence that stays connected to the decision
+
+![Assurio evidence traceability: system baseline, evaluation evidence, and scoped decision, with change-triggered reassessment](docs/assets/assurio-evidence-flow.svg)
+
+The record links a system baseline to its evidence and decision. When a change affects that baseline, the application flags the linked records for review.
+
+## Built for practical governance reviews
+
+- **AI governance teams:** Maintain system ownership, lifecycle controls, framework mappings, and decision records.
+- **Model risk and validation teams:** Review evaluation methods, observed results, failed findings, and evidence validity.
+- **Engineering teams:** Document model versions, component dependencies, agent boundaries, and changes.
+- **Assurance reviewers:** Follow the record from system scope through evidence to a decision and its revision history.
+
+These workflows support responsible AI practices by making scope, human review, and the basis for a decision visible.
+
+## Quick start
+
+**Requires Node.js 22.13+ and npm.** Run these commands from the application directory containing package.json.
+
+~~~bash
+npm ci
+npm run build
+~~~
+
+Initialize a **fresh local database once**:
+
+~~~bash
+node --import ./scripts/sites-env.mjs ./node_modules/wrangler/bin/wrangler.js d1 execute DB --local --config dist/server/wrangler.json --persist-to .wrangler/state --file drizzle/0000_nervous_guardian.sql
+~~~
+
+Start the application:
+
+~~~bash
+npm start
+~~~
+
+Open **http://127.0.0.1:8787**. In an empty workspace, choose **Load sample workspace** to explore the connected demo, or **Register AI system** to create your first record.
+
+Already initialized this workspace? Skip the migration step. For source development, use npm run dev and follow the URL printed in the terminal.
+
+[Complete setup instructions →](docs/APPLICATION_GUIDE.md#quick-start) · [First walkthrough →](docs/APPLICATION_GUIDE.md#first-walkthrough) · [Troubleshooting →](docs/APPLICATION_GUIDE.md#troubleshooting)
+
+## Technology and architecture
+
+![Assurio architecture: owner-private Sites access, React workspace, Cloudflare Worker API, D1 records and audit history, and R2 evidence storage](docs/assets/assurio-architecture.svg)
+
+| Layer | Stack |
+| :--- | :--- |
+| Interface | React 19 · TypeScript · Lucide icons · Responsive CSS |
+| Application | Vinext · Vite · Server-side API routes |
+| Runtime | Cloudflare Workers |
+| Structured records | Cloudflare D1 · Drizzle schema and migrations |
+| Evidence artifacts | Cloudflare R2 · SHA-256 fingerprints |
+| Hosted access | Owner-private Sites authentication boundary |
+
+Records and files persist across sessions. Local and hosted storage are separate.
+
+[Architecture and project structure →](docs/APPLICATION_GUIDE.md#architecture)
+
+## Documentation
+
+| Guide | Contents |
+| :--- | :--- |
+| [Application guide](docs/APPLICATION_GUIDE.md) | Installation, walkthrough, workflow behavior, and development commands. |
+| [API reference](docs/APPLICATION_GUIDE.md#api-reference) | Record creation and revision, artifact uploads, responses, and access requirements. |
+| [Testing](docs/APPLICATION_GUIDE.md#testing) | Type checking, production builds, API workflow checks, and browser checks. |
+| [Deployment and persistence](docs/APPLICATION_GUIDE.md#deployment-and-persistence) | Storage bindings, private hosting, and local/hosted data boundaries. |
+| [Implementation limits](docs/APPLICATION_GUIDE.md#current-scope-and-limitations) | Current behavior and capabilities requiring additional implementation. |
+| [GitHub publishing guide](docs/GITHUB_PUBLISHING.md) | Suggested repository description, topics, and discoverability settings. |
 
 ## Validation
 
-- npx tsc --noEmit
-- npm run build
-- node scripts/test-workflows.mjs (against the local running server; creates QA records)
-- scripts/browser-qa.mjs uses an isolated Chrome DevTools session on port 9223 for desktop/mobile checks and captures ignored screenshots.
+The initial implementation passed TypeScript checks, a production build, **20 API workflow checks**, and desktop/mobile browser checks. This is a recorded validation result, not a live CI status.
 
-The integration checks cover required fields, approval gates, evaluation scoring, stale revisions, change invalidation, artifact upload/download/fingerprinting, cross-origin rejection, audit events, and sample loading.
+~~~bash
+npx tsc --noEmit
+npm run build
+~~~
 
-## API contract
+With the local application running:
 
-GET /api/records returns records and the latest 500 audit events.
-POST /api/records creates a record with {kind, data}, or revises one with {id, revision, data}.
-POST /api/records with {action:"seed"} loads missing sample records without replacing existing ones.
-POST /api/artifacts accepts multipart fields id, revision, and file (maximum 10 MB).
-GET /api/artifacts?id=<evidence-id> downloads the current artifact.
+~~~bash
+node scripts/test-workflows.mjs
+~~~
 
-Use the authenticated hosted Site boundary. External integrations must obtain supported Sites service access; there is no public ingestion endpoint or embedded secret. Record kinds and accepted fields are defined in lib/modules.ts.
+The workflow tests create local QA records and load sample data. Use a test workspace.
 
-## Explicit limits
+## Implementation scope
 
-This is a functional application implementation, not a reproduction of undisclosed proprietary internals or a certified enterprise deployment.
+**Implemented:** Persistent governance records, linked system details, threshold-based evaluation outcomes, evidence uploads and downloads, approval checks, revision history, change-triggered reassessment, search, status filters, and JSON exports.
 
-- Integration entries are configuration/contract records, not live external connectors.
-- Agent boundaries are documented controls; enforcement belongs in the actual agent runtime.
-- Dedicated, edge, disconnected, retention and recovery profiles are planning records, not infrastructure provisioning.
-- Multi-user role/attribute authorization, cryptographic artifact signing, WORM retention, scheduled telemetry ingestion, and automated test runners are not implemented.
-- The audit ledger preserves history through the app API; it is not cryptographically immutable against database administrators.
-- Approval checks are basic workflow gates, not legal compliance or safety determinations.
-- Evidence is linked at system level for approval gates; assess relevance and completeness before approving.
-- JSON audit exports contain the latest 500 events; all historical events remain in D1.
+**Requires additional implementation:** Live external connectors, automated model-test execution, scheduled monitoring, multi-user role/attribute authorization, runtime agent enforcement, cryptographic signing, WORM retention, and offline synchronization.
+
+Deployment profiles and integration entries document requirements; they do not provision infrastructure or activate external services. Approval checks are workflow gates, not a compliance or safety determination.
+
+[Review the complete implementation limits →](docs/APPLICATION_GUIDE.md#current-scope-and-limitations)
+
+---
+
+<div align="center">
+
+### Assurio by SDLC Corp
+
+**Connect the system. Preserve the evidence. Make the decision accountable.**
+
+[Product overview](https://sdlccorp.com/products/assurio/) · [SDLC Corp](https://sdlccorp.com/) · [Private hosted workspace — authorized access required](https://assurio-assurance-workspace.ovoidjuice2.chatgpt.site)
+
+<sub>Assurio is an SDLC Corp product. Third-party dependencies retain their respective licenses. No open-source license is granted by this README.</sub>
+
+</div>
